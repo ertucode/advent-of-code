@@ -1,8 +1,8 @@
-use crate::y2015::day2::{q1, q2};
+use crate::y2015::day3::{q1, q2};
 
 pub mod y2015;
 
 fn main() {
-    println!("Day2: Q1: {}", q1());
-    println!("Day2: Q2: {}", q2());
+    println!("Day3: Q1: {}", q1());
+    println!("Day3: Q2: {}", q2());
 }
