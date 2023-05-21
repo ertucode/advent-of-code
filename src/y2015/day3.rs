@@ -24,6 +24,14 @@ struct Santa {
 }
 
 impl Santa {
+    pub fn new() -> Santa {
+        let start = Point(0, 0);
+        Santa {
+            pos: start,
+            visited: HashSet::from([start]),
+        }
+    }
+
     fn visit(&mut self, cha: &char) {
         let pos = match cha {
             '>' => Ok(self.pos.add(Point(0, 1))),
@@ -42,15 +50,15 @@ impl Santa {
     fn total_visits(&self) -> usize {
         self.visited.len()
     }
+
+    fn total_visits_with_partner(&self, partner: &Santa) -> usize {
+        self.visited.union(&partner.visited).count()
+    }
 }
 
 pub fn q1() -> usize {
     let input = fs::read_to_string("./src/y2015/day3-input.txt").unwrap();
-    let mut santa = Santa {
-        pos: Point(0, 0),
-        visited: HashSet::new(),
-    };
-    santa.visited.insert(Point(0, 0));
+    let mut santa = Santa::new();
 
     input.chars().for_each(|x| {
         santa.visit(&x);
@@ -60,5 +68,20 @@ pub fn q1() -> usize {
 }
 
 pub fn q2() -> usize {
-    2
+    let input = fs::read_to_string("./src/y2015/day3-input.txt").unwrap();
+    let mut santa = Santa::new();
+    let mut robo_santa = Santa::new();
+    let mut last_is_santa = false;
+
+    input.chars().for_each(|x| {
+        if last_is_santa {
+            robo_santa.visit(&x);
+            last_is_santa = false;
+        } else {
+            santa.visit(&x);
+            last_is_santa = true;
+        }
+    });
+
+    santa.total_visits_with_partner(&robo_santa)
 }
