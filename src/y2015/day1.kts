@@ -1,11 +1,11 @@
 import java.io.File
+import java.nio.file.Paths
 
 fun readInput(): String {
-    return File("./day1-input.txt").readText()
+    return File("src/y2015/day1-input.txt").readText()
 }
 
 fun q1(): Int = readInput().asIterable().fold(0) {acc, c -> acc + if (c == '(') {1} else {-1}}
-
 
 println("Day1-Q1: ${q1()}")
 
